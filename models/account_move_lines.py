@@ -6,7 +6,8 @@ from odoo import fields, models, api
 class descuentosinporcentaje(models.Model):
     _inherit = "account.move.line"
 
-    descuento = fields.Float(string="Descuento(sin porcentaje)",)
+    descuento = fields.Float(string="Descuento",)
+    precio = fields.Float(string="Precio Descuento",)
 
     @api.model
     def _get_price_total_and_subtotal_model(self, price_unit, quantity, discount, currency, product, partner, taxes, move_type):
@@ -31,6 +32,7 @@ class descuentosinporcentaje(models.Model):
         price_unit_wo_discount = price_unit * (1 - (discount / 100.0))
         subtotal = quantity * price_unit_wo_discount
         self.descuento = price_unit - subtotal
+        self.precio = subtotal + self.descuento
         # Compute 'price_total'.
         if taxes:
             taxes_res = taxes._origin.compute_all(price_unit_wo_discount,
@@ -43,3 +45,4 @@ class descuentosinporcentaje(models.Model):
         if currency:
             res = {k: currency.round(v) for k, v in res.items()}
         return res
+
