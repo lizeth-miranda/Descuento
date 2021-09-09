@@ -6,8 +6,20 @@ from odoo import fields, models, api
 class descuento(models.Model):
     _inherit = "account.move"
 
-    des = fields.Float(
-        related="commercial_partner_id.invoice_ids.invoice_line_ids.descuento", string="Amortizacion Anticipo",)
+    des = fields.Float(compute="compute_get_descuento",
+                       string="Amortizacion Anticipo",)
 
-    price = fields.Float(
-        related="commercial_partner_id.invoice_ids.invoice_line_ids.price_unit", string="Importe Base",)
+    price = fields.Float(compute="compute_price", string="Importe Base",)
+
+    def compute_get_descuento(self):
+        for record in self:
+            record.des = sum(self.env['account.move.line'].search([
+                ('discount', '>', 0),
+            ]).mapped('descuento'))
+
+    def compute_price(self):
+        for record in self:
+            record.price = sum(self.env['account.move.line'].search([
+                ('discount', '>', 0),
+            ]).mapped('precio'))
+
