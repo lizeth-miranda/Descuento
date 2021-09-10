@@ -7,11 +7,11 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='discount']" position="after">
                 <field name="descuento" />
-                <field name="precio" invisible="1" />
+                <!-- <field name="precio" invisible="0" /> -->
             </xpath>
             <field name="journal_id" position="after">
-                <field name="des" invisible="1" />
-                <field name="price" invisible="1" />
+                <field name="des" invisible="0" />
+                <field name="price" invisible="0" />
             </field>
         </field>
     </record>
