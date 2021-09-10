@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Descuento sin Porcentaje',
-    'version': '13.4',
+    'version': '13.5',
     'author': 'Demsa',
     'website': '',
     'depends': [
