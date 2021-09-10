@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # instruccion para hacer importaciones desde odoo
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class descuento(models.Model):
@@ -11,16 +11,10 @@ class descuento(models.Model):
 
     price = fields.Float(compute="compute_price", string="Importe Base",)
 
-    @api.depends("discount")
     def compute_get_descuento(self):
-        for record in self:
-            record.des = sum(self.env['account.move.line'].search([
-                ('discount', '>', 0),
-            ]).mapped('descuento'))
+        self.des = sum(
+            line.descuento for line in self.invoice_line_ids)
 
-    @api.depends("discount")
     def compute_price(self):
-        for record in self:
-            record.price = sum(self.env['account.move.line'].search([
-                ('discount', '>', 0),
-            ]).mapped('precio'))
+        self.price = sum(
+            line.price_unit for line in self.invoice_line_ids)
