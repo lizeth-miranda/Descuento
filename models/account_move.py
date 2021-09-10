@@ -8,13 +8,11 @@ class descuento(models.Model):
 
     des = fields.Float(compute="compute_get_descuento",
                        string="Amortizacion Anticipo",)
+    porcen = fields.Float(related="invoice_line_ids.discount")
 
-    price = fields.Float(compute="compute_price", string="Importe Base",)
+    price = fields.Float(
+        related="invoice_line_ids.price_unit", string="Importe Base",)
 
     def compute_get_descuento(self):
-        self.des = sum(
-            line.descuento for line in self.invoice_line_ids)
-
-    def compute_price(self):
-        self.price = sum(
-            line.price_unit for line in self.invoice_line_ids)
+        for record in self:
+            record.des = record.price * (record.porcen / 100.0)
