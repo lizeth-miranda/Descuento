@@ -4,6 +4,7 @@
     'version': '13.8',
     'author': 'Demsa',
     'website': '',
+    'license': 'LGPL-3',
     'depends': [
         'account_accountant',
 
