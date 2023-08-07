@@ -4,7 +4,6 @@
     'version': '13.8',
     'author': 'Demsa',
     'website': '',
-    'license': 'LGPL-3',
     'depends': [
         'account_accountant',
 
@@ -19,4 +18,5 @@
         'views/account_move_line.xml',
 
     ],
+    'license': 'LGPL-3',
 }
